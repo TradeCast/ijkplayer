@@ -1,4 +1,5 @@
 /*
+ * Copyright (C) 2015 Bilibili
  * Copyright (C) 2015 Zhang Rui <bbcallen@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -61,6 +62,15 @@ public class AndroidTrackInfo implements ITrackInfo {
             return null;
 
         return new AndroidMediaFormat(mediaFormat);
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    @Override
+    public String getLanguage() {
+        if (mTrackInfo == null)
+            return "und";
+
+        return mTrackInfo.getLanguage();
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
