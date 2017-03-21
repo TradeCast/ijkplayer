@@ -122,7 +122,19 @@ FF_DEP_OPENSSL_INC=
 FF_DEP_OPENSSL_LIB=
 FF_XCODE_BITCODE=
 
-if [ "$FF_ARCH" = "armv7" ]; then
+if [ "$FF_ARCH" = "i386" ]; then
+    FF_BUILD_NAME="ffmpeg-i386"
+    FF_BUILD_NAME_OPENSSL=openssl-i386
+    FF_XCRUN_PLATFORM="iPhoneSimulator"
+    FF_XCRUN_OSVERSION="-mios-simulator-version-min=6.0"
+    FFMPEG_CFG_FLAGS="$FFMPEG_CFG_FLAGS $FFMPEG_CFG_FLAGS_SIMULATOR"
+elif [ "$FF_ARCH" = "x86_64" ]; then
+    FF_BUILD_NAME="ffmpeg-x86_64"
+    FF_BUILD_NAME_OPENSSL=openssl-x86_64
+    FF_XCRUN_PLATFORM="iPhoneSimulator"
+    FF_XCRUN_OSVERSION="-mios-simulator-version-min=7.0"
+    FFMPEG_CFG_FLAGS="$FFMPEG_CFG_FLAGS $FFMPEG_CFG_FLAGS_SIMULATOR"
+elif [ "$FF_ARCH" = "armv7" ]; then
     FF_BUILD_NAME="ffmpeg-armv7"
     FF_BUILD_NAME_OPENSSL=openssl-armv7
     FF_XCRUN_OSVERSION="-miphoneos-version-min=6.0"
@@ -136,6 +148,13 @@ elif [ "$FF_ARCH" = "armv7s" ]; then
     FF_XCRUN_OSVERSION="-miphoneos-version-min=6.0"
     FF_XCODE_BITCODE="-fembed-bitcode"
     FFMPEG_CFG_FLAGS="$FFMPEG_CFG_FLAGS $FFMPEG_CFG_FLAGS_ARM"
+elif [ "$FF_ARCH" = "arm64" ]; then
+    FF_BUILD_NAME="ffmpeg-arm64"
+    FF_BUILD_NAME_OPENSSL=openssl-arm64
+    FF_XCRUN_OSVERSION="-miphoneos-version-min=7.0"
+    FF_XCODE_BITCODE="-fembed-bitcode"
+    FFMPEG_CFG_FLAGS="$FFMPEG_CFG_FLAGS $FFMPEG_CFG_FLAGS_ARM"
+    FF_GASPP_EXPORT="GASPP_FIX_XCODE5=1"
 else
     echo "unknown architecture $FF_ARCH";
     exit 1
